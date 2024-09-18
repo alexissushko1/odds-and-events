@@ -48,4 +48,47 @@ Array is stored in number bank
     -If number is odd, pop to odd category
     */ 
 
-    
+    //===State===
+
+    const numberBank = [];
+    let selectedNum = "";
+
+    function addNumber(number) {
+        numberBank.push(number);
+      }  
+
+      //---Render---
+      function render() {
+        const $numberBank = numberBank.map((number) => {
+         const $number = document.createElement("span");
+         $number.textContent = number;
+
+        $number.addEventListener("submit", () => {
+          selectedNum = number;
+          render();
+        });
+        return $number;
+        });
+
+        const $section = document.querySelector("#numberBank");
+        $section.replaceChildren(...$numberBank);
+
+      }
+
+      //===Script===
+
+      render();
+
+    const $form = document.querySelector("form");
+    $form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      //word should be added to state
+      const $number = document.querySelector("#number"); 
+      const number = $number.value;
+      addNumber($number.value);
+      $number.value = "";
+   
+
+//rerender b/c change of state
+render();
+});
