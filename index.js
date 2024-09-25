@@ -59,6 +59,14 @@ Array is stored in number bank
         console.log(numberBank);
       }  
 
+      function sort() {
+        const number = numberBank.shift();
+        if(number%2===1) {
+          odds.push(number);
+        } else {
+          evens.push(number);
+        }
+      }
 
 
       //---Render---
@@ -73,8 +81,17 @@ Array is stored in number bank
         numberInput.replaceChildren(...$numbers);
       }
 
-
-      function renderBank(){
+      const renderOdds = () => {
+        const $numbers = odds.map((number) => {
+          const $number = document.createElement("div");
+          $number.textContent=number;
+          return $number;
+        });
+        const numberInput = document.querySelector("#odds");
+        numberInput.replaceChildren(...$numbers);
+      }
+      function render(){
+        renderOdds();
         renderNumbers();
       }
      
@@ -85,7 +102,7 @@ Array is stored in number bank
         event.preventDefault();
         const $number = document.querySelector("#number");
         addNumber($number.value);
-        renderBank();
+        render();
       })
       
       
