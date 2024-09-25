@@ -51,44 +51,43 @@ Array is stored in number bank
     //===State===
 
     const numberBank = [];
-    let selectedNum = "";
+    const odds = [];
+    const evens = [];
 
     function addNumber(number) {
         numberBank.push(number);
+        console.log(numberBank);
       }  
 
+
+
       //---Render---
-      function render() {
-        const $numberBank = numberBank.map((number) => {
-         const $number = document.createElement("span");
-         $number.textContent = number;
 
-        $number.addEventListener("submit", () => {
-          selectedNum = number;
-          render();
+      const renderNumbers = () => {
+        const $numbers = numberBank.map((number) => {
+          const $number = document.createElement("div");
+          $number.textContent = number;
+          return $number;
         });
-        return $number;
-        });
-
-        const $section = document.querySelector("#numberBank");
-        $section.replaceChildren(...$numberBank);
-
+        const numberInput = document.querySelector("#select");
+        numberInput.replaceChildren(...$numbers);
       }
 
+
+      function renderBank(){
+        renderNumbers();
+      }
+     
       //===Script===
 
-      render();
-
-    const $form = document.querySelector("form");
-    $form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      //word should be added to state
-      const $number = document.querySelector("#number"); 
-      const number = $number.value;
-      addNumber($number.value);
-      $number.value = "";
-   
+      const $form = document.querySelector("form");
+      $form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const $number = document.querySelector("#number");
+        addNumber($number.value);
+        renderBank();
+      })
+      
+      
 
 //rerender b/c change of state
-render();
-});
